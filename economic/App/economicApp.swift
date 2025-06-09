@@ -11,7 +11,7 @@ import SwiftUI
 struct economicApp: App {
     var body: some Scene {
         WindowGroup {
-            AppCoordinator().start()
+            CoordinatorView()
         }
     }
 }
