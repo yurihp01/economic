@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		DAE809D62DF752B300B7147E /* economic.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DAE809D42DF752B300B7147E /* economic.xcdatamodeld */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		DA7DDD9E2DF5F02100E7A2BC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -19,15 +23,15 @@
 /* Begin PBXFileReference section */
 		DA7DDD902DF5F01F00E7A2BC /* economic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = economic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA7DDD9D2DF5F02100E7A2BC /* economicTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = economicTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAE809D52DF752B300B7147E /* economic.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = economic.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
 		DA7DDDBE2DF5F05F00E7A2BC /* Exceptions for "economic" folder in "economicTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				App/AppCoordinator.swift,
 				Data/CoreData/CoreDataManager.swift,
-				Data/CoreData/ReceiptEntity.swift,
+				Data/CoreData/PersistenceController.swift,
 				Data/Repository/ReceiptRepository.swift,
 				Features/Receipt/Model/Receipt.swift,
 				Features/Receipt/View/AddReceiptView.swift,
@@ -85,6 +89,7 @@
 		DA7DDD872DF5F01F00E7A2BC = {
 			isa = PBXGroup;
 			children = (
+				DAE809D42DF752B300B7147E /* economic.xcdatamodeld */,
 				DA7DDD922DF5F01F00E7A2BC /* economic */,
 				DA7DDDA02DF5F02100E7A2BC /* economicTests */,
 				DA7DDD912DF5F01F00E7A2BC /* Products */,
@@ -209,6 +214,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAE809D62DF752B300B7147E /* economic.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,6 +485,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DAE809D42DF752B300B7147E /* economic.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DAE809D52DF752B300B7147E /* economic.xcdatamodel */,
+			);
+			currentVersion = DAE809D52DF752B300B7147E /* economic.xcdatamodel */;
+			path = economic.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = DA7DDD882DF5F01F00E7A2BC /* Project object */;
 }
