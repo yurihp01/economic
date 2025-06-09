@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct AddReceiptView: View {
-    @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: ReceiptViewModel
+    @EnvironmentObject private var coordinator: Coordinator
 
     private let currencies = ["EUR", "USD", "GBP", "BRL"]
     @State private var date = Date()
@@ -31,18 +31,15 @@ struct AddReceiptView: View {
                     .disabled(!canSave)
             }
             ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel", action: dismiss.callAsFunction)
+                Button("Cancel", action: coordinator.pop)
             }
-        }
-        .sheet(isPresented: $showImagePicker) {
-            ImagePicker(image: $inputImage)
         }
     }
 
     private var photoSection: some View {
         Section(header: Text("Photo")) {
             Button("Take Photo") {
-                showImagePicker = true
+                coordinator.presentFullScreenCover(.camera($inputImage))
             }
             .frame(maxWidth: .infinity, alignment: .center)
 
@@ -85,7 +82,7 @@ struct AddReceiptView: View {
               let doubleAmount = Double(amount) else { return }
 
         viewModel.addReceipt(imageData: data, date: date, amount: doubleAmount, currency: currency)
-        dismiss()
+        coordinator.pop()
     }
 }
 

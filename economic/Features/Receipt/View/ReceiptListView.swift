@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ReceiptListView: View {
     @StateObject var viewModel = ReceiptViewModel()
-    @State private var navigateToAddReceipt = false
+    @EnvironmentObject private var coordinator: Coordinator
 
     var body: some View {
         NavigationStack {
@@ -44,15 +44,15 @@ struct ReceiptListView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        navigateToAddReceipt = true
+                        coordinator.push(page: .addReceipt)
                     } label: {
                         Image(systemName: "plus")
                             .imageScale(.large)
                     }
                 }
             }
-            .navigationDestination(isPresented: $navigateToAddReceipt) {
-                AddReceiptView(viewModel: viewModel)
+            .onAppear {
+                viewModel.fetchReceipts()
             }
         }
     }
