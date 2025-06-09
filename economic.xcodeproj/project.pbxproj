@@ -14,35 +14,52 @@
 			remoteGlobalIDString = DA7DDD8F2DF5F01F00E7A2BC;
 			remoteInfo = economic;
 		};
-		DA7DDDA82DF5F02100E7A2BC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DA7DDD882DF5F01F00E7A2BC /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DA7DDD8F2DF5F01F00E7A2BC;
-			remoteInfo = economic;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		DA7DDD902DF5F01F00E7A2BC /* economic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = economic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA7DDD9D2DF5F02100E7A2BC /* economicTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = economicTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DA7DDDA72DF5F02100E7A2BC /* economicUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = economicUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		DA7DDDBE2DF5F05F00E7A2BC /* Exceptions for "economic" folder in "economicTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				App/AppCoordinator.swift,
+				Data/CoreData/CoreDataManager.swift,
+				Data/CoreData/ReceiptEntity.swift,
+				Data/Repository/ReceiptRepository.swift,
+				Features/Receipt/Model/Receipt.swift,
+				Features/Receipt/View/AddReceiptView.swift,
+				Features/Receipt/View/ReceiptListView.swift,
+				Features/Receipt/ViewModel/ReceiptViewModel.swift,
+				Info.plist,
+				Utils/ImagePicker.swift,
+			);
+			target = DA7DDD9C2DF5F02100E7A2BC /* economicTests */;
+		};
+		DA7DDDE92DF5FD6900E7A2BC /* Exceptions for "economic" folder in "economic" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = DA7DDD8F2DF5F01F00E7A2BC /* economic */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		DA7DDD922DF5F01F00E7A2BC /* economic */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				DA7DDDE92DF5FD6900E7A2BC /* Exceptions for "economic" folder in "economic" target */,
+				DA7DDDBE2DF5F05F00E7A2BC /* Exceptions for "economic" folder in "economicTests" target */,
+			);
 			path = economic;
 			sourceTree = "<group>";
 		};
 		DA7DDDA02DF5F02100E7A2BC /* economicTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = economicTests;
-			sourceTree = "<group>";
-		};
-		DA7DDDAA2DF5F02100E7A2BC /* economicUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = economicUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -62,13 +79,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DA7DDDA42DF5F02100E7A2BC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -77,7 +87,6 @@
 			children = (
 				DA7DDD922DF5F01F00E7A2BC /* economic */,
 				DA7DDDA02DF5F02100E7A2BC /* economicTests */,
-				DA7DDDAA2DF5F02100E7A2BC /* economicUITests */,
 				DA7DDD912DF5F01F00E7A2BC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -87,7 +96,6 @@
 			children = (
 				DA7DDD902DF5F01F00E7A2BC /* economic.app */,
 				DA7DDD9D2DF5F02100E7A2BC /* economicTests.xctest */,
-				DA7DDDA72DF5F02100E7A2BC /* economicUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -140,29 +148,6 @@
 			productReference = DA7DDD9D2DF5F02100E7A2BC /* economicTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		DA7DDDA62DF5F02100E7A2BC /* economicUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = DA7DDDB72DF5F02100E7A2BC /* Build configuration list for PBXNativeTarget "economicUITests" */;
-			buildPhases = (
-				DA7DDDA32DF5F02100E7A2BC /* Sources */,
-				DA7DDDA42DF5F02100E7A2BC /* Frameworks */,
-				DA7DDDA52DF5F02100E7A2BC /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				DA7DDDA92DF5F02100E7A2BC /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				DA7DDDAA2DF5F02100E7A2BC /* economicUITests */,
-			);
-			name = economicUITests;
-			packageProductDependencies = (
-			);
-			productName = economicUITests;
-			productReference = DA7DDDA72DF5F02100E7A2BC /* economicUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -177,10 +162,6 @@
 						CreatedOnToolsVersion = 16.3;
 					};
 					DA7DDD9C2DF5F02100E7A2BC = {
-						CreatedOnToolsVersion = 16.3;
-						TestTargetID = DA7DDD8F2DF5F01F00E7A2BC;
-					};
-					DA7DDDA62DF5F02100E7A2BC = {
 						CreatedOnToolsVersion = 16.3;
 						TestTargetID = DA7DDD8F2DF5F01F00E7A2BC;
 					};
@@ -202,7 +183,6 @@
 			targets = (
 				DA7DDD8F2DF5F01F00E7A2BC /* economic */,
 				DA7DDD9C2DF5F02100E7A2BC /* economicTests */,
-				DA7DDDA62DF5F02100E7A2BC /* economicUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -216,13 +196,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		DA7DDD9B2DF5F02100E7A2BC /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DA7DDDA52DF5F02100E7A2BC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -246,13 +219,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DA7DDDA32DF5F02100E7A2BC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -260,11 +226,6 @@
 			isa = PBXTargetDependency;
 			target = DA7DDD8F2DF5F01F00E7A2BC /* economic */;
 			targetProxy = DA7DDD9E2DF5F02100E7A2BC /* PBXContainerItemProxy */;
-		};
-		DA7DDDA92DF5F02100E7A2BC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DA7DDD8F2DF5F01F00E7A2BC /* economic */;
-			targetProxy = DA7DDDA82DF5F02100E7A2BC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -322,6 +283,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				"INFOPLIST_FILE[sdk=*]" = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -399,7 +361,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 527J6A5223;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "$(SRCROOT)/economic/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -427,7 +390,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 527J6A5223;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "$(SRCROOT)/economic/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -484,40 +448,6 @@
 			};
 			name = Release;
 		};
-		DA7DDDB82DF5F02100E7A2BC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 527J6A5223;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = br.com.yuri.economicUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = economic;
-			};
-			name = Debug;
-		};
-		DA7DDDB92DF5F02100E7A2BC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 527J6A5223;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = br.com.yuri.economicUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = economic;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -544,15 +474,6 @@
 			buildConfigurations = (
 				DA7DDDB52DF5F02100E7A2BC /* Debug */,
 				DA7DDDB62DF5F02100E7A2BC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		DA7DDDB72DF5F02100E7A2BC /* Build configuration list for PBXNativeTarget "economicUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				DA7DDDB82DF5F02100E7A2BC /* Debug */,
-				DA7DDDB92DF5F02100E7A2BC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
