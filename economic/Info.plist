@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleIdentifier</key>
+   <string>br.com.yuri.economic</string>
+
+   <key>CFBundleName</key>
+   <string>economic</string>
+   
+   <key>CFBundleExecutable</key>
+   <string>$(EXECUTABLE_NAME)</string>
+
+   <key>NSCameraUsageDescription</key>
+   <string>We need access to the camera to take photos of receipts.</string>
+
+   <key>NSPhotoLibraryUsageDescription</key>
+   <string>To access your saved receipt images.</string>
+</dict>
+</plist>
