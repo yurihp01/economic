@@ -8,37 +8,21 @@
 import SwiftUI
 
 struct ReceiptListView: View {
-    @StateObject var viewModel = ReceiptViewModel()
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \ReceiptEntity.date, ascending: false)],
+        animation: .default
+    )
+    private var receipts: FetchedResults<ReceiptEntity>
+    
     @EnvironmentObject private var coordinator: Coordinator
 
     var body: some View {
         NavigationStack {
-            List(viewModel.receipts) { receipt in
-                HStack(spacing: 12) {
-                    if let image = UIImage(data: receipt.imageData) {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 60, height: 60)
-                            .cornerRadius(8)
-                            .clipped()
-                    } else {
-                        Rectangle()
-                            .fill(Color.gray.opacity(0.3))
-                            .frame(width: 60, height: 60)
-                            .cornerRadius(8)
-                    }
-
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("\(receipt.amount, specifier: "%.2f") \(receipt.currency)")
-                            .fontWeight(.semibold)
-
-                        Text(receipt.date.formatted(date: .numeric, time: .omitted))
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                    }
+            ScrollView {
+                LazyVStack(spacing: 16) {
+                    ForEach(receipts) { ReceiptCard(receipt: $0) }
                 }
-                .padding(.vertical, 4)
+                .padding()
             }
             .navigationTitle("Receipts")
             .toolbar {
@@ -46,13 +30,11 @@ struct ReceiptListView: View {
                     Button {
                         coordinator.push(page: .addReceipt)
                     } label: {
-                        Image(systemName: "plus")
+                        Image(systemName: "plus.circle.fill")
                             .imageScale(.large)
+                            .foregroundColor(.blue)
                     }
                 }
-            }
-            .onAppear {
-                viewModel.fetchReceipts()
             }
         }
     }

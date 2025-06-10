@@ -6,20 +6,41 @@
 //
 
 import Foundation
+import CoreData
+import Combine
 
 protocol ReceiptRepositoryProtocol {
-    func fetchAll() -> [Receipt]
-    func save(imageData: Data, date: Date, amount: Double, currency: String)
+    func save(imageData: Data, date: Date, amount: Double, currency: String) -> AnyPublisher<Void, Error>
 }
 
-class ReceiptRepository: ReceiptRepositoryProtocol {
-    private let manager = CoreDataManager.shared
+final class ReceiptRepository: ReceiptRepositoryProtocol {
+    private let container: NSPersistentContainer
 
-    func fetchAll() -> [Receipt] {
-        manager.fetchReceipts()
+    init(container: NSPersistentContainer = PersistenceController.shared.container) {
+        self.container = container
     }
 
-    func save(imageData: Data, date: Date, amount: Double, currency: String) {
-        manager.saveReceipt(imageData: imageData, date: date, amount: amount, currency: currency)
+    func save(imageData: Data, date: Date, amount: Double, currency: String) -> AnyPublisher<Void, Error> {
+        Future { promise in
+            let context = self.container.newBackgroundContext()
+            context.perform {
+                let receipt = ReceiptEntity(context: context)
+                receipt.id = UUID()
+                receipt.imageData = imageData
+                receipt.date = date
+                receipt.amount = amount
+                receipt.currency = currency
+
+                do {
+                    try context.save()
+                    promise(.success(()))
+                } catch {
+                    promise(.failure(error))
+                }
+            }
+        }
+        .subscribe(on: DispatchQueue.global(qos: .userInitiated))
+        .receive(on: DispatchQueue.main)
+        .eraseToAnyPublisher()
     }
 }

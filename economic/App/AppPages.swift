@@ -13,7 +13,7 @@ enum AppPages: Hashable {
 }
 
 enum FullScreenCover: Equatable, Identifiable {
-    case camera(Binding<UIImage?>)
+    case camera((UIImage) -> Void)
     
     var id: String {
         switch self {

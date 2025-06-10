@@ -30,15 +30,15 @@ class Coordinator: ObservableObject {
     @ViewBuilder
     func build(page: AppPages) -> some View {
         switch page {
-        case .receipts: ReceiptListView(viewModel: .init())
-        case .addReceipt: AddReceiptView(viewModel: .init())
+        case .receipts: ReceiptListView()
+        case .addReceipt: AddReceiptView()
         }
     }
     
     @ViewBuilder
     func build(cover: FullScreenCover) -> some View {
         switch cover {
-        case .camera(let image): ImagePicker(image: image)
+        case .camera(let image): ImagePicker(onImagePicked: image)
         }
     }
 }

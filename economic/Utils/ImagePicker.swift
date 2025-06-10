@@ -9,16 +9,16 @@ import SwiftUI
 import UIKit
 
 struct ImagePicker: UIViewControllerRepresentable {
-    @Environment(\.presentationMode) var presentationMode
-    @Binding var image: UIImage?
+    var sourceType: UIImagePickerController.SourceType = .camera
+    var onImagePicked: (UIImage) -> Void
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(self)
+        Coordinator(onImagePicked: onImagePicked)
     }
 
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
-        picker.sourceType = .camera
+        picker.sourceType = sourceType
         picker.delegate = context.coordinator
         return picker
     }
@@ -26,21 +26,21 @@ struct ImagePicker: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
 
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-        let parent: ImagePicker
+        let onImagePicked: (UIImage) -> Void
 
-        init(_ parent: ImagePicker) {
-            self.parent = parent
+        init(onImagePicked: @escaping (UIImage) -> Void) {
+            self.onImagePicked = onImagePicked
         }
 
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            if let uiImage = info[.originalImage] as? UIImage {
-                parent.image = uiImage
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+            if let image = info[.originalImage] as? UIImage {
+                onImagePicked(image)
             }
-            parent.presentationMode.wrappedValue.dismiss()
+            picker.dismiss(animated: true)
         }
 
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-            parent.presentationMode.wrappedValue.dismiss()
+            picker.dismiss(animated: true)
         }
     }
 }

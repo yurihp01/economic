@@ -30,12 +30,12 @@
 		DA7DDDBE2DF5F05F00E7A2BC /* Exceptions for "economic" folder in "economicTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Data/CoreData/CoreDataManager.swift,
 				Data/CoreData/PersistenceController.swift,
 				Data/Repository/ReceiptRepository.swift,
-				Features/Receipt/Model/Receipt.swift,
 				Features/Receipt/View/AddReceiptView.swift,
+				Features/Receipt/View/ReceiptCard.swift,
 				Features/Receipt/View/ReceiptListView.swift,
+				Features/Receipt/View/ReceiptPhotoSection.swift,
 				Features/Receipt/ViewModel/ReceiptViewModel.swift,
 				Info.plist,
 				Utils/ImagePicker.swift,

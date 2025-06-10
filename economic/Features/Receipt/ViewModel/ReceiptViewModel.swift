@@ -9,21 +9,22 @@ import Foundation
 import Combine
 
 class ReceiptViewModel: ObservableObject {
-    @Published var receipts: [Receipt] = []
     private let repository: ReceiptRepositoryProtocol
     private var cancellables = Set<AnyCancellable>()
-
+    
     init(repository: ReceiptRepositoryProtocol = ReceiptRepository()) {
         self.repository = repository
-        fetchReceipts()
     }
-
-    func fetchReceipts() {
-        receipts = repository.fetchAll()
-    }
-
-    func addReceipt(imageData: Data, date: Date, amount: Double, currency: String) {
+    
+    func addReceipt(imageData: Data, date: Date, amount: Double, currency: String, completion: @escaping () -> Void) {
         repository.save(imageData: imageData, date: date, amount: amount, currency: currency)
-        fetchReceipts()
+        .sink(receiveCompletion: { completionState in
+            if case let .failure(error) = completionState {
+                print("Failed to save receipt: \(error)")
+            }
+        }, receiveValue: {
+            completion()
+        })
+        .store(in: &cancellables)
     }
 }
