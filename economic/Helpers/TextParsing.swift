@@ -10,25 +10,38 @@ import Foundation
 struct TextParsing {
     
     private static let dateFormats = [
-        "dd/MM/yyyy", "d/M/yyyy", "dd/M/yyyy", "d/MM/yyyy",
-        "yyyy/MM/dd", "yyyy/M/d", "yyyy/MM/d", "yyyy/M/dd"
+        "dd/MM/yyyy", "d/M/yyyy", "MM/dd/yyyy", "M/d/yyyy",
+        "yyyy/MM/dd", "yyyy/M/d", "MMMM d, yyyy"
     ]
     
     static func extractDate(from text: String) -> Date? {
-        let pattern = #"(?<!\d)(\d{1,2}[./-]\d{1,2}[./-]\d{4})(?!\d)|(?<!\d)(\d{4}[./-]\d{1,2}[./-]\d{1,2})(?!\d)"#
-        guard let dateString = matchRegex(text, pattern: pattern)?
-                .replacingOccurrences(of: ".", with: "/")
-                .replacingOccurrences(of: "-", with: "/") else {
-            return nil
+        let patterns = [
+            "\\b\\d{1,2}[./-]\\d{1,2}[./-]\\d{2,4}\\b",
+            "\\b\\d{4}[./-]\\d{1,2}[./-]\\d{1,2}\\b",
+            "\\b[a-zA-Z]+ \\d{1,2}, \\d{4}\\b"
+        ]
+
+        let normalizedText = text
+            .replacingOccurrences(of: "-", with: "/")
+            .replacingOccurrences(of: ".", with: "/")
+
+        for pattern in patterns {
+            if let dateString = matchRegex(normalizedText, pattern: pattern) {
+                for format in dateFormats {
+                    let formatter = DateFormatter()
+                    formatter.locale = Locale(identifier: "en_US_POSIX")
+                    formatter.dateFormat = format
+
+                    if let date = formatter.date(from: dateString) {
+                        return date
+                    }
+                }
+            }
         }
 
-        return dateFormats.compactMap { format in
-            let formatter = DateFormatter()
-            formatter.dateFormat = format
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            return formatter.date(from: dateString)
-        }.first
+        return nil
     }
+
 
     static func extractAllAmounts(from text: String) -> [String] {
         let pattern = "(€|\\$|£|EUR|USD|GBP|eur|usd|gbp)?\\s*\\d{1,3}(?:[\\s.,]?\\d{3})*[.,]\\d{2}\\b"
@@ -43,7 +56,7 @@ struct TextParsing {
     }
     
     static func parseAmount(from raw: String) -> Double? {
-        let amount = raw
+        Double(raw
             .replacingOccurrences(of: "\\s", with: "", options: .regularExpression)
             .replacingOccurrences(of: ",", with: ".")
             .replacingOccurrences(of: "€", with: "")
@@ -52,9 +65,7 @@ struct TextParsing {
             .replacingOccurrences(of: "EUR", with: "", options: .caseInsensitive)
             .replacingOccurrences(of: "USD", with: "", options: .caseInsensitive)
             .replacingOccurrences(of: "GBP", with: "", options: .caseInsensitive)
-            .trimmingCharacters(in: .whitespaces)
-
-        return Double(amount)
+            .trimmingCharacters(in: .whitespaces))
     }
     
     static func extractCurrency(from raw: String) -> String {
@@ -74,4 +85,3 @@ struct TextParsing {
         return String(text[range])
     }
 }
-
