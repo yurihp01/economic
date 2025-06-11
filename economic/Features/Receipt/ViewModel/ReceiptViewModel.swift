@@ -5,29 +5,54 @@
 //  Created by Yuri on 08/06/25.
 //
 
-import Foundation
-import UIKit
+//
+//  ReceiptViewModel.swift
+//  economic
+//
+//  Created by Yuri on 08/06/25.
+//
 
+import UIKit
+import Combine
+
+@MainActor
 final class ReceiptViewModel: ObservableObject {
     @Published var errorMessage: String?
+    @Published var isLoading = false
 
     private let repository: ReceiptRepositoryProtocol
-
+    private var cancellables = Set<AnyCancellable>()
+    
     init(repository: ReceiptRepositoryProtocol) {
         self.repository = repository
     }
 
-    func save(image: UIImage?, date: Date, amount: Double, currency: String) {
-        guard let image = image else { return }
+    func processAndSave(image: UIImage) {
+        isLoading = true
 
-        DispatchQueue.global(qos: .userInitiated).async {
-            do {
-                try self.repository.saveReceipt(image: image, date: date, amount: amount, currency: currency)
-            } catch {
-                DispatchQueue.main.async {
+        ImageTextExtractor.extractReceipt(from: image)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                guard let self else { return }
+
+                if case .failure(let error) = completion {
                     self.errorMessage = error.localizedDescription
+                    self.isLoading = false
                 }
+            } receiveValue: { [weak self] extractedData in
+                guard let self else { return }
+
+                self.repository
+                    .saveReceipt(image: image, data: extractedData)
+                    .receive(on: DispatchQueue.main)
+                    .sink { completion in
+                        self.isLoading = false
+                        if case .failure(let error) = completion {
+                            self.errorMessage = error.localizedDescription
+                        }
+                    } receiveValue: { _ in }
+                    .store(in: &self.cancellables)
             }
-        }
+            .store(in: &cancellables)
     }
 }

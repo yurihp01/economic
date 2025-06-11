@@ -34,10 +34,7 @@ class Coordinator: ObservableObject {
     
     @ViewBuilder
     func build(page: AppPages) -> some View {
-        switch page {
-        case .receipts: ReceiptListView()
-        case .addReceipt: AddReceiptView(repository: dependencies.receiptRepository)
-        }
+        ReceiptListView(repository: dependencies.receiptRepository)
     }
     
     @ViewBuilder
