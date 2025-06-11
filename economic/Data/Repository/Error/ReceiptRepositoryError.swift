@@ -7,7 +7,11 @@
 
 import Foundation
 
-enum ReceiptRepositoryError: LocalizedError {
+enum ReceiptRepositoryError: LocalizedError, Equatable {
+    static func == (lhs: ReceiptRepositoryError, rhs: ReceiptRepositoryError) -> Bool {
+        lhs.errorDescription == rhs.errorDescription
+    }
+    
     case imageConversionFailed
     case imageWriteFailed
     case coreDataSaveFailed

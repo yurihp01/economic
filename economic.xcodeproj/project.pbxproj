@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA81F4792DF9FADB0003CB10 /* economic.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DAE809D42DF752B300B7147E /* economic.xcdatamodeld */; };
 		DAE809D62DF752B300B7147E /* economic.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DAE809D42DF752B300B7147E /* economic.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
@@ -32,15 +33,17 @@
 			membershipExceptions = (
 				Data/CoreData/PersistenceController.swift,
 				Data/Factory/ReceiptModelFactory.swift,
+				Data/OCR/Error/ImageTextExtractorError.swift,
 				Data/OCR/ImageTextExtractor.swift,
+				Data/Repository/Error/ReceiptRepositoryError.swift,
 				Data/Repository/ReceiptRepository.swift,
 				Data/Storage/FileStorage.swift,
+				Features/Receipt/Model/ReceiptExtractedData.swift,
 				Features/Receipt/View/ReceiptCard.swift,
 				Features/Receipt/View/ReceiptListView.swift,
 				Features/Receipt/ViewModel/ReceiptViewModel.swift,
 				Helpers/ImageLoader.swift,
 				Helpers/TextParsing.swift,
-				Info.plist,
 				UI/Components/ImagePicker.swift,
 				UI/Components/ImagePreviewSheet.swift,
 				UI/Components/ToastView.swift,
@@ -227,6 +230,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA81F4792DF9FADB0003CB10 /* economic.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,6 +433,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 527J6A5223;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.yuri.economicTests;
@@ -448,6 +453,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 527J6A5223;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.yuri.economicTests;
