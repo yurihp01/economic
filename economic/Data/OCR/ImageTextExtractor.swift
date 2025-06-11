@@ -9,12 +9,6 @@ import Vision
 import UIKit
 import Combine
 
-struct ReceiptExtractedData {
-    let date: Date?
-    let amount: Double
-    let currency: String
-}
-
 final class ImageTextExtractor {
     static func extractReceipt(from image: UIImage) -> AnyPublisher<ReceiptExtractedData, ImageTextExtractorError> {
             recognizeText(from: image)
