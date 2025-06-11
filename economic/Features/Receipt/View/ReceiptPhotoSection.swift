@@ -9,10 +9,9 @@ import SwiftUI
 
 struct ReceiptPhotoSection: View {
     @Binding var isPresentingImageSourceSheet: Bool
-    @Binding var isPresentingCamera: Bool
-    @Binding var imagePickerSource: UIImagePickerController.SourceType
     @Binding var imageData: Data?
-    
+    @Binding var selectedImagePicker: ImagePickerType?
+
     var body: some View {
         VStack(spacing: 16) {
             Button {
@@ -32,12 +31,10 @@ struct ReceiptPhotoSection: View {
             .actionSheet(isPresented: $isPresentingImageSourceSheet) {
                 ActionSheet(title: Text("Select Photo Source"), buttons: [
                     .default(Text("Camera")) {
-                        imagePickerSource = .camera
-                        isPresentingCamera = true
+                        selectedImagePicker = .camera
                     },
                     .default(Text("Photo Library")) {
-                        imagePickerSource = .photoLibrary
-                        isPresentingCamera = true
+                        selectedImagePicker = .photoLibrary
                     },
                     .cancel()
                 ])

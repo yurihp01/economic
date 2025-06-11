@@ -25,6 +25,7 @@ struct ReceiptListView: View {
                 .padding()
             }
             .navigationTitle("Receipts")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {

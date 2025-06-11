@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddReceiptView: View {
-    @StateObject var viewModel = ReceiptViewModel()
+    @StateObject private var viewModel: ReceiptViewModel
     @EnvironmentObject private var coordinator: Coordinator
 
     private let currencies = ["EUR", "USD", "GBP", "BRL"]
@@ -16,15 +16,24 @@ struct AddReceiptView: View {
     @State private var date = Date()
     @State private var amount = ""
     @State private var currency = "EUR"
+    @State private var image: UIImage?
     @State private var imageData: Data?
-    @State private var isPresentingCamera = false
     @State private var isPresentingImageSourceSheet = false
+    @State private var selectedImagePicker: ImagePickerType?
     @State private var imagePickerSource: UIImagePickerController.SourceType = .camera
+
+    init(repository: ReceiptRepositoryProtocol) {
+        _viewModel = StateObject(wrappedValue: ReceiptViewModel(repository: repository))
+    }
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 28) {
-                ReceiptPhotoSection(isPresentingImageSourceSheet: $isPresentingImageSourceSheet, isPresentingCamera: $isPresentingCamera, imagePickerSource: $imagePickerSource, imageData: $imageData)
+                ReceiptPhotoSection(
+                    isPresentingImageSourceSheet: $isPresentingImageSourceSheet,
+                    imageData: $imageData,
+                    selectedImagePicker: $selectedImagePicker
+                )
                 detailsSection
                 datePickerSection
                 saveButton
@@ -33,10 +42,16 @@ struct AddReceiptView: View {
         }
         .navigationTitle("Add Receipt")
         .onTapGesture { hideKeyboard() }
-        .sheet(isPresented: $isPresentingCamera) {
-            ImagePicker(sourceType: imagePickerSource) { image in
-                let resized = image.resize(toWidth: 150)
-                self.imageData = resized.jpegData(compressionQuality: 0.4)
+        .sheet(item: $selectedImagePicker) { pickerType in
+            ImagePicker(sourceType: pickerType.sourceType) { pickedImage in
+                DispatchQueue.global(qos: .userInitiated).async {
+                    let resized = pickedImage.resize(toWidth: 150)
+                    let data = resized.jpegData(compressionQuality: 0.4)
+                    DispatchQueue.main.async {
+                        self.image = resized
+                        self.imageData = data
+                    }
+                }
             }
         }
     }
@@ -58,7 +73,7 @@ struct AddReceiptView: View {
     }
 
     private var canSave: Bool {
-        imageData != nil && Double(amount) != nil && !currency.isEmpty
+        image != nil && Double(amount) != nil && !currency.isEmpty
     }
 
     private var detailsSection: some View {
@@ -114,11 +129,10 @@ struct AddReceiptView: View {
     }
     
     private func saveReceipt() {
-        guard let data = imageData,
+        guard let image = image,
               let doubleAmount = Double(amount) else { return }
 
-        viewModel.addReceipt(imageData: data, date: date, amount: doubleAmount, currency: currency) {
-            coordinator.pop()
-        }
+        viewModel.save(image: image, date: date, amount: doubleAmount, currency: currency)
+        coordinator.pop()
     }
 }

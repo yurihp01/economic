@@ -8,6 +8,19 @@
 import SwiftUI
 import UIKit
 
+enum ImagePickerType: Identifiable {
+    case camera, photoLibrary
+
+    var id: Int { hashValue }
+    
+    var sourceType: UIImagePickerController.SourceType {
+        switch self {
+        case .camera: return .camera
+        case .photoLibrary: return .photoLibrary
+        }
+    }
+}
+
 struct ImagePicker: UIViewControllerRepresentable {
     var sourceType: UIImagePickerController.SourceType = .camera
     var onImagePicked: (UIImage) -> Void
