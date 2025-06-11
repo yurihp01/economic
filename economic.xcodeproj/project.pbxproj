@@ -32,16 +32,18 @@
 			membershipExceptions = (
 				Data/CoreData/PersistenceController.swift,
 				Data/Factory/ReceiptModelFactory.swift,
+				Data/OCR/ImageTextExtractor.swift,
 				Data/Repository/ReceiptRepository.swift,
-				Features/Custom/ToastView.swift,
+				Data/Storage/FileStorage.swift,
 				Features/Receipt/View/ReceiptCard.swift,
 				Features/Receipt/View/ReceiptListView.swift,
 				Features/Receipt/ViewModel/ReceiptViewModel.swift,
+				Helpers/ImageLoader.swift,
+				Helpers/TextParsing.swift,
 				Info.plist,
-				Utils/ImageLoader.swift,
-				Utils/ImagePicker.swift,
-				Utils/ImageTextExtractor.swift,
-				Utils/TextParsing.swift,
+				UI/Components/ImagePicker.swift,
+				UI/Components/ImagePreviewSheet.swift,
+				UI/Components/ToastView.swift,
 			);
 			target = DA7DDD9C2DF5F02100E7A2BC /* economicTests */;
 		};

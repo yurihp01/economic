@@ -13,15 +13,15 @@ protocol ReceiptRepositoryProtocol {
     func saveReceipt(image: UIImage, data: ReceiptExtractedData) -> AnyPublisher<Void, ReceiptRepositoryError>
 }
 
-import CoreData
-import Combine
-import SwiftUI
-
 final class ReceiptRepository: ReceiptRepositoryProtocol {
     private let container: NSPersistentContainer
+    private let fileStorage: FileStorageProtocol
     
-    init(container: NSPersistentContainer = PersistenceController.shared.container) {
+    init(container: NSPersistentContainer = PersistenceController.shared.container,
+         fileStorage: FileStorageProtocol = FileStorage()
+    ) {
         self.container = container
+        self.fileStorage = fileStorage
     }
     
     func saveReceipt(image: UIImage, data: ReceiptExtractedData) -> AnyPublisher<Void, ReceiptRepositoryError> {
@@ -30,16 +30,13 @@ final class ReceiptRepository: ReceiptRepositoryProtocol {
             let entity = ReceiptEntity(context: context)
             
             let filename = UUID().uuidString + ".jpg"
-            let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                .appendingPathComponent(filename)
-            
-            guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-                promise(.failure(.imageConversionFailed))
-                return
-            }
             
             do {
-                try imageData.write(to: url)
+                let url = try self.fileStorage.saveImage(image, withName: filename)
+                entity.imagePath = url.lastPathComponent
+            } catch let error as ReceiptRepositoryError {
+                promise(.failure(error))
+                return
             } catch {
                 promise(.failure(.imageWriteFailed))
                 return
@@ -49,9 +46,7 @@ final class ReceiptRepository: ReceiptRepositoryProtocol {
             entity.date = data.date
             entity.amount = data.amount
             entity.currency = data.currency
-            entity.imagePath = filename
             
-            print("[DEBUG] Saving receipt with path: \(filename)")
             do {
                 try context.save()
                 promise(.success(()))
