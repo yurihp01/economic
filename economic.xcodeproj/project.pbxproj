@@ -31,15 +31,17 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Data/CoreData/PersistenceController.swift,
+				Data/Factory/ReceiptModelFactory.swift,
 				Data/Repository/ReceiptRepository.swift,
-				Features/Receipt/View/AddReceiptView.swift,
+				Features/Custom/ToastView.swift,
 				Features/Receipt/View/ReceiptCard.swift,
 				Features/Receipt/View/ReceiptListView.swift,
-				Features/Receipt/View/ReceiptPhotoSection.swift,
 				Features/Receipt/ViewModel/ReceiptViewModel.swift,
 				Info.plist,
 				Utils/ImageLoader.swift,
 				Utils/ImagePicker.swift,
+				Utils/ImageTextExtractor.swift,
+				Utils/TextParsing.swift,
 			);
 			target = DA7DDD9C2DF5F02100E7A2BC /* economicTests */;
 		};
