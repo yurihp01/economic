@@ -7,10 +7,10 @@
 
 import Foundation
 import CoreData
-import Combine
+import SwiftUI
 
 protocol ReceiptRepositoryProtocol {
-    func save(imageData: Data, date: Date, amount: Double, currency: String) -> AnyPublisher<Void, Error>
+    func saveReceipt(image: UIImage, date: Date, amount: Double, currency: String) throws
 }
 
 final class ReceiptRepository: ReceiptRepositoryProtocol {
@@ -20,27 +20,24 @@ final class ReceiptRepository: ReceiptRepositoryProtocol {
         self.container = container
     }
 
-    func save(imageData: Data, date: Date, amount: Double, currency: String) -> AnyPublisher<Void, Error> {
-        Future { promise in
-            let context = self.container.newBackgroundContext()
-            context.perform {
-                let receipt = ReceiptEntity(context: context)
-                receipt.id = UUID()
-                receipt.imageData = imageData
-                receipt.date = date
-                receipt.amount = amount
-                receipt.currency = currency
+    func saveReceipt(image: UIImage, date: Date, amount: Double, currency: String) throws {
+        let filename = UUID().uuidString + ".jpg"
+        let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(filename)
 
-                do {
-                    try context.save()
-                    promise(.success(()))
-                } catch {
-                    promise(.failure(error))
-                }
-            }
+        guard let data = image.jpegData(compressionQuality: 0.8) else {
+            throw NSError(domain: "ImageConversion", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to convert image to JPEG."])
         }
-        .subscribe(on: DispatchQueue.global(qos: .userInitiated))
-        .receive(on: DispatchQueue.main)
-        .eraseToAnyPublisher()
+
+        try data.write(to: url)
+
+        let context = container.viewContext
+        let entity = ReceiptEntity(context: context)
+        entity.id = UUID()
+        entity.date = date
+        entity.amount = amount
+        entity.currency = currency
+        entity.imagePath = filename
+
+        try context.save()
     }
 }

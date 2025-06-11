@@ -12,7 +12,7 @@ struct ReceiptCard: View {
 
     var body: some View {
         HStack(spacing: 16) {
-            if let data = receipt.imageData, let image = UIImage(data: data) {
+            if let image = ImageLoader.load(from: receipt.imagePath) {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFill()

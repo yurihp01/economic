@@ -6,25 +6,28 @@
 //
 
 import Foundation
-import Combine
+import UIKit
 
-class ReceiptViewModel: ObservableObject {
+final class ReceiptViewModel: ObservableObject {
+    @Published var errorMessage: String?
+
     private let repository: ReceiptRepositoryProtocol
-    private var cancellables = Set<AnyCancellable>()
-    
-    init(repository: ReceiptRepositoryProtocol = ReceiptRepository()) {
+
+    init(repository: ReceiptRepositoryProtocol) {
         self.repository = repository
     }
-    
-    func addReceipt(imageData: Data, date: Date, amount: Double, currency: String, completion: @escaping () -> Void) {
-        repository.save(imageData: imageData, date: date, amount: amount, currency: currency)
-        .sink(receiveCompletion: { completionState in
-            if case let .failure(error) = completionState {
-                print("Failed to save receipt: \(error)")
+
+    func save(image: UIImage?, date: Date, amount: Double, currency: String) {
+        guard let image = image else { return }
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                try self.repository.saveReceipt(image: image, date: date, amount: amount, currency: currency)
+            } catch {
+                DispatchQueue.main.async {
+                    self.errorMessage = error.localizedDescription
+                }
             }
-        }, receiveValue: {
-            completion()
-        })
-        .store(in: &cancellables)
+        }
     }
 }

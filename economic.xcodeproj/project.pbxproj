@@ -38,6 +38,7 @@
 				Features/Receipt/View/ReceiptPhotoSection.swift,
 				Features/Receipt/ViewModel/ReceiptViewModel.swift,
 				Info.plist,
+				Utils/ImageLoader.swift,
 				Utils/ImagePicker.swift,
 			);
 			target = DA7DDD9C2DF5F02100E7A2BC /* economicTests */;
