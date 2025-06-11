@@ -15,12 +15,7 @@ enum AppPages: Hashable {
 enum FullScreenCover: Equatable, Identifiable {
     case camera((UIImage) -> Void)
     
-    var id: String {
-        switch self {
-        case .camera:
-            return "camera"
-        }
-    }
+    var id: String { "camera" }
     
     static func == (lhs: FullScreenCover, rhs: FullScreenCover) -> Bool {
         switch (lhs, rhs) {

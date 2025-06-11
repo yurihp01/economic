@@ -8,8 +8,13 @@
 import SwiftUI
 
 class Coordinator: ObservableObject {
+    private var dependencies: AppDependencies
     @Published var path: NavigationPath = NavigationPath()
     @Published var fullScreenCover: FullScreenCover?
+    
+    init(dependencies: AppDependencies) {
+       self.dependencies = dependencies
+   }
 
     func push(page: AppPages) {
         path.append(page)
@@ -31,7 +36,7 @@ class Coordinator: ObservableObject {
     func build(page: AppPages) -> some View {
         switch page {
         case .receipts: ReceiptListView()
-        case .addReceipt: AddReceiptView()
+        case .addReceipt: AddReceiptView(repository: dependencies.receiptRepository)
         }
     }
     

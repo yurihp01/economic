@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct CoordinatorView: View {
-    @StateObject var coordinator = Coordinator()
-    
+    @EnvironmentObject private var coordinator: Coordinator
+    @EnvironmentObject private var dependencies: AppDependencies
+
     var body: some View {
         NavigationStack(path: $coordinator.path) {
             coordinator.build(page: .receipts)
