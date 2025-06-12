@@ -7,8 +7,7 @@
 
 import Foundation
 
-struct TextParsing {
-    
+enum TextParsing {
     private static let dateFormats = [
         "dd/MM/yyyy", "d/M/yyyy", "MM/dd/yyyy", "M/d/yyyy",
         "yyyy/MM/dd", "yyyy/M/d", "MMMM d, yyyy"
@@ -42,7 +41,6 @@ struct TextParsing {
         return nil
     }
 
-
     static func extractAllAmounts(from text: String) -> [String] {
         let pattern = "(€|\\$|£|EUR|USD|GBP|eur|usd|gbp)?\\s*\\d{1,3}(?:[\\s.,]?\\d{3})*[.,]\\d{2}\\b"
 
@@ -75,7 +73,11 @@ struct TextParsing {
         return "UNDEF"
     }
     
-    private static func matchRegex(_ text: String, pattern: String) -> String? {
+    
+}
+
+private extension TextParsing {
+    static func matchRegex(_ text: String, pattern: String) -> String? {
         let regex = try! NSRegularExpression(pattern: pattern)
         let range = NSRange(text.startIndex..., in: text)
         guard let match = regex.firstMatch(in: text, range: range),

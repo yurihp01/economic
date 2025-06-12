@@ -10,10 +10,11 @@ import SwiftUI
 @main
 struct economicApp: App {
     let persistence = PersistenceController.shared
+    private let dependencies = AppDependencies()
 
     var body: some Scene {
         WindowGroup {
-            ReceiptListView(repository: ReceiptRepository())
+            ReceiptListView(dependencies: dependencies)
                 .environment(\.managedObjectContext, persistence.container.viewContext)
         }
     }

@@ -7,7 +7,7 @@
 
 import CoreData
 
-struct ReceiptModelFactory {
+enum ReceiptModelFactory {
     static func build(in context: NSManagedObjectContext,
                       from data: ReceiptExtractedData,
                       imagePath: String? = nil) -> ReceiptEntity {

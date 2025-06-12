@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct ImageLoader {
+enum ImageLoader {
     static func load(from path: String?) -> UIImage? {
         guard let path = path else { return nil }
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(path)

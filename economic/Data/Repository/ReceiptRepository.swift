@@ -17,9 +17,7 @@ final class ReceiptRepository: ReceiptRepositoryProtocol {
     private let container: NSPersistentContainer
     private let fileStorage: FileStorageProtocol
     
-    init(container: NSPersistentContainer = PersistenceController.shared.container,
-         fileStorage: FileStorageProtocol = FileStorage()
-    ) {
+    init(container: NSPersistentContainer, fileStorage: FileStorageProtocol) {
         self.container = container
         self.fileStorage = fileStorage
     }

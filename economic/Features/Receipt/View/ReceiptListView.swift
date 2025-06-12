@@ -13,16 +13,18 @@ struct ReceiptListView: View {
         animation: .default
     )
     private var receipts: FetchedResults<ReceiptEntity>
-
+    private let dependencies: AppDependencies
+    
     @StateObject private var viewModel: ReceiptViewModel
     @State private var showErrorToast = false
     @State private var selectedImagePicker: ImagePickerType?
     @State private var isShowingImageSourceDialog = false
-
-    init(repository: ReceiptRepositoryProtocol) {
-        _viewModel = StateObject(wrappedValue: ReceiptViewModel(repository: repository))
+    
+    init(dependencies: AppDependencies) {
+        self.dependencies = dependencies
+        _viewModel = StateObject(wrappedValue: ReceiptViewModel(dependencies: dependencies))
     }
-
+    
     var body: some View {
         NavigationStack {
             List {

@@ -31,6 +31,7 @@
 		DA7DDDBE2DF5F05F00E7A2BC /* Exceptions for "economic" folder in "economicTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				App/AppDependencies.swift,
 				Data/CoreData/PersistenceController.swift,
 				Data/Factory/ReceiptModelFactory.swift,
 				Data/OCR/Error/ImageTextExtractorError.swift,
@@ -38,6 +39,7 @@
 				Data/Repository/Error/ReceiptRepositoryError.swift,
 				Data/Repository/ReceiptRepository.swift,
 				Data/Storage/FileStorage.swift,
+				Features/Receipt/Model/IdentifiableImage.swift,
 				Features/Receipt/Model/ReceiptExtractedData.swift,
 				Features/Receipt/View/ReceiptCard.swift,
 				Features/Receipt/View/ReceiptListView.swift,
@@ -57,6 +59,13 @@
 			);
 			target = DA7DDD8F2DF5F01F00E7A2BC /* economic */;
 		};
+		DA81F49F2DFA69070003CB10 /* Exceptions for "economicTests" folder in "economic" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Mocks/MockFileStorage.swift,
+			);
+			target = DA7DDD8F2DF5F01F00E7A2BC /* economic */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -71,6 +80,9 @@
 		};
 		DA7DDDA02DF5F02100E7A2BC /* economicTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				DA81F49F2DFA69070003CB10 /* Exceptions for "economicTests" folder in "economic" target */,
+			);
 			path = economicTests;
 			sourceTree = "<group>";
 		};

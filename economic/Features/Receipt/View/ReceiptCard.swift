@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-struct IdentifiableImage: Identifiable {
-    let id = UUID()
-    let image: UIImage
-}
-
 struct ReceiptCard: View {
     let receipt: ReceiptEntity
     @State private var expandedImage: IdentifiableImage?

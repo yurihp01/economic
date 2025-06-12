@@ -20,17 +20,17 @@ final class ReceiptViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var isLoading = false
 
-    private let repository: ReceiptRepositoryProtocol
+    private let dependencies: AppDependencies
     private var cancellables = Set<AnyCancellable>()
     
-    init(repository: ReceiptRepositoryProtocol) {
-        self.repository = repository
+    init(dependencies: AppDependencies) {
+        self.dependencies = dependencies
     }
 
     func processAndSave(image: UIImage) {
         isLoading = true
 
-        ImageTextExtractor.extractReceipt(from: image)
+        dependencies.textExtractor.extractReceipt(from: image)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 guard let self else { return }
@@ -42,7 +42,7 @@ final class ReceiptViewModel: ObservableObject {
             } receiveValue: { [weak self] extractedData in
                 guard let self else { return }
 
-                self.repository
+                self.dependencies.receiptRepository
                     .saveReceipt(image: image, data: extractedData)
                     .receive(on: DispatchQueue.main)
                     .sink { completion in
