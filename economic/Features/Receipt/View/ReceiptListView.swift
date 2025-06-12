@@ -60,6 +60,8 @@ struct ReceiptListView: View {
                 if viewModel.isLoading {
                     Color.black.opacity(0.4).ignoresSafeArea()
                     ProgressView("Processing...")
+                        .foregroundStyle(.blue)
+                        .tint(.blue)
                         .padding()
                         .background(Color.white)
                         .cornerRadius(12)
