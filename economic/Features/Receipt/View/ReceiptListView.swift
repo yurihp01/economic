@@ -15,7 +15,6 @@ struct ReceiptListView: View {
     private var receipts: FetchedResults<ReceiptEntity>
 
     @StateObject private var viewModel: ReceiptViewModel
-    @State private var showImagePicker = false
     @State private var showErrorToast = false
     @State private var selectedImagePicker: ImagePickerType?
     @State private var isShowingImageSourceDialog = false
