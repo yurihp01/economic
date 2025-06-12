@@ -12,22 +12,22 @@ import Combine
 
 final class ImageTextExtractorTests: XCTestCase {
     private var cancellables: Set<AnyCancellable> = []
-
+    
     func testExtractReceipt_returnsFailureForInvalidImage() {
-            let extractor = ImageTextExtractor()
-            let image = UIImage()
-            let expectation = XCTestExpectation(description: "Should return failure for invalid image")
-
-            extractor.extractReceipt(from: image)
-                .sink(receiveCompletion: { completion in
-                    if case .failure = completion {
-                        expectation.fulfill()
-                    }
-                }, receiveValue: { _ in
-                    XCTFail("Expected failure, but got value")
-                })
-                .store(in: &cancellables)
-
-            wait(for: [expectation], timeout: 3.0)
-        }
+        let extractor = ImageTextExtractor()
+        let image = UIImage()
+        let expectation = XCTestExpectation(description: "Should return failure for invalid image")
+        
+        extractor.extractReceipt(from: image)
+            .sink(receiveCompletion: { completion in
+                if case .failure = completion {
+                    expectation.fulfill()
+                }
+            }, receiveValue: { _ in
+                XCTFail("Expected failure, but got value")
+            })
+            .store(in: &cancellables)
+        
+        wait(for: [expectation], timeout: 3.0)
+    }
 }
