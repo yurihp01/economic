@@ -16,21 +16,22 @@ final class ReceiptRepositoryTests: XCTestCase {
     var sut: ReceiptRepository!
     var container: NSPersistentContainer!
     var cancellables: Set<AnyCancellable>!
-
+    
     override func setUp() {
         super.setUp()
         container = CoreDataTestHelper.inMemoryContainer
-        sut = ReceiptRepository(container: container)
+        let fileStorage = MockFileStorage()
+        sut = ReceiptRepository(container: container, fileStorage: fileStorage)
         cancellables = []
     }
-
+    
     override func tearDown() {
         sut = nil
         container = nil
         cancellables = nil
         super.tearDown()
     }
-
+    
     func test_saveReceipt_successfullySaves() {
         let expectation = expectation(description: "Save receipt")
 
@@ -57,7 +58,7 @@ final class ReceiptRepositoryTests: XCTestCase {
 
         waitForExpectations(timeout: 2)
     }
-
+    
     func test_saveReceipt_imageConversionFails() {
         let expectation = expectation(description: "Fail to convert image")
         let extractedData = ReceiptExtractedData(

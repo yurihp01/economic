@@ -6,21 +6,28 @@
 //
 
 import XCTest
-@testable import economic
 import UIKit
+import Combine
+@testable import economic
 
 final class ImageTextExtractorTests: XCTestCase {
+    private var cancellables: Set<AnyCancellable> = []
+
     func testExtractReceipt_returnsFailureForInvalidImage() {
-        let image = UIImage()
-        let expectation = XCTestExpectation(description: "Image is not valid")
+            let extractor = ImageTextExtractor()
+            let image = UIImage()
+            let expectation = XCTestExpectation(description: "Should return failure for invalid image")
 
-        _ = ImageTextExtractor.extractReceipt(from: image)
-            .sink(receiveCompletion: { completion in
-                if case .failure = completion {
-                    expectation.fulfill()
-                }
-            }, receiveValue: { _ in })
+            extractor.extractReceipt(from: image)
+                .sink(receiveCompletion: { completion in
+                    if case .failure = completion {
+                        expectation.fulfill()
+                    }
+                }, receiveValue: { _ in
+                    XCTFail("Expected failure, but got value")
+                })
+                .store(in: &cancellables)
 
-        wait(for: [expectation], timeout: 3.0)
-    }
+            wait(for: [expectation], timeout: 3.0)
+        }
 }
